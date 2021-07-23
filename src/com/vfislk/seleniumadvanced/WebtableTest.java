@@ -15,16 +15,38 @@ public class WebtableTest {
 		
 		driver.get("https://datatables.net/extensions/select/examples/initialisation/checkbox.html");
 		
+        boolean pageCheck=false;
 		
-		String name1=driver.findElement(By.xpath("//table[@id='example']/tbody/tr[1]/td[2]")).getText();
-		System.out.println(name1);
-		
-		String name2=driver.findElement(By.xpath("//table[@id='example']/tbody/tr[2]/td[2]")).getText();
-		System.out.println(name2);
-		
-		for(int i=1; i<=10;i++) {
-			String name = driver.findElement(By.xpath("//table[@id='example']/tbody/tr["+i+"]/td[2]")).getText();
-			System.out.println(name);
+		for(int p=1;p<=6;p++)
+		{
+			int rowCount=driver.findElements(By.xpath("//table[@id='example']/tbody/tr")).size();
+			System.out.println(rowCount);
+			
+			for(int i=1;i<=10;i++)
+			{
+				String name=driver.findElement(By.xpath("//table[@id='example']/tbody/tr["+i+"]/td[2]")).getText();
+				System.out.println(name);	
+				
+				if(name.equals("Michael Silva"))
+				{
+					driver.findElement(By.xpath("//table[@id='example']/tbody/tr["+i+"]/td[1]")).click();
+					String sal=driver.findElement(By.xpath("//table[@id='example']/tbody/tr["+i+"]/td[6]")).getText();
+					System.out.println(sal);
+					pageCheck=true;
+					break;
+				}
+			}
+			
+			if(pageCheck)
+			{
+				break;
+			}
+			if(driver.findElement(By.linkText("Next")).isEnabled())
+			{
+				driver.findElement(By.linkText("Next")).click();
+			}
+			
+			
 		}
 
 	}
